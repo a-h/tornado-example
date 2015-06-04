@@ -22,33 +22,5 @@ class UrlMatchingTests(TestCase):
         self.assertEqual(handler, app.ApplicationHandler)
 
 
-class ApplicationHandlerTests(TestCase):
-    def test_that_applications_can_be_listed(self):
-        # Arrange
-        mock_application_repository = ApplicationRepository()
-        mock_application_repository.list_applications = MagicMock(return_value={'some': 'data'})
-
-        request = MagicMock()
-        application = MagicMock()
-        output = MagicMock()
-        handler = app.ApplicationHandler(application, request, application_repository=mock_application_repository)
-        handler.write = output
-
-        # Act
-        handler.get()
-
-        # Assert
-        output.assert_called_once_with(json.dumps({'some': 'data'}))
-
-
-class IntegrationTests(WebTestCase):
-    def get_handlers(self):
-        return app.get_handlers()
-
-    def test_fetching_an_application(self):
-        body = self.fetch("/application").body
-        self.assertTrue(True)
-
-
 if __name__ == '__main__':
     unittest.main()
