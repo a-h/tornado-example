@@ -10,7 +10,8 @@ def make_app():
 
 def get_handlers():
     return [
-        url(r"/application/?", ApplicationHandler, dict(application_repository=ApplicationRepository()))
+        url(r"/application/?", ApplicationHandler, dict(application_repository=ApplicationRepository())),
+        url(r"/application/(.+)", ApplicationHandler, dict(application_repository=ApplicationRepository()))
     ]
 
 
