@@ -14,9 +14,13 @@ class ApplicationHandler(RequestHandler):
             # prior to __init__
             self.application_repository = None
 
-    def initialize(self, application_repository):
+    def initialize(self, application_repository: ApplicationRepository):
         # injection of arguments from the handler configuration is done
         # here.
+        """
+
+        :type application_repository: ApplicationRepository
+        """
         assert isinstance(application_repository, ApplicationRepository)
         self.application_repository = application_repository
 

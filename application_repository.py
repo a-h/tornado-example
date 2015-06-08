@@ -2,7 +2,6 @@ import json
 from bson import ObjectId
 from motor import MotorClient
 from tornado import gen
-from tornado.gen import Return
 from models.application_model import ApplicationModel
 
 
@@ -27,7 +26,7 @@ class ApplicationRepository:
         return str(app_id)
 
     @gen.coroutine
-    def get_application(self, application_id):
+    def get_application(self, application_id: str):
         db = self.client.applications
         cursor = db.applications.find({"_id": ObjectId(application_id)})
         return (yield cursor.to_list(1000))
