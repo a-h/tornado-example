@@ -3,6 +3,7 @@ from bson import json_util
 from tornado import gen
 from tornado.web import RequestHandler
 from application_repository import ApplicationRepository
+from models.application_model import ApplicationModel
 
 
 class ApplicationHandler(RequestHandler):
@@ -36,7 +37,8 @@ class ApplicationHandler(RequestHandler):
     @gen.coroutine
     def put(self):
         data = json.loads(self.request.body.decode('utf-8'))
-        application_id = yield self.application_repository.insert_application(data)
+        model = ApplicationModel(data)
+        application_id = yield self.application_repository.insert_application(model)
         self.write(json.dumps({"id": application_id,}))
 
     def set_default_headers(self):

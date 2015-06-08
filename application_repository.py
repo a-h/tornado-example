@@ -1,7 +1,9 @@
+import json
 from bson import ObjectId
 from motor import MotorClient
 from tornado import gen
 from tornado.gen import Return
+from models.application_model import ApplicationModel
 
 
 class ApplicationRepository:
@@ -16,10 +18,13 @@ class ApplicationRepository:
         return result
 
     @gen.coroutine
-    def insert_application(self, application):
+    def insert_application(self, application: ApplicationModel):
+        application.validate()
+
         db = self.client.applications
 
-        return str((yield db.applications.insert(application)))
+        app_id = yield db.applications.insert(application.to_primitive())
+        return str(app_id)
 
     @gen.coroutine
     def get_application(self, application_id):
